@@ -83,7 +83,15 @@ DATABASES = {
         "PASSWORD": "123456",
         "HOST": "127.0.0.1",
         "PORT": "5432",
-    }
+    },
+    "fish": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "fs_point",
+        "USER": "postgres",
+        "PASSWORD": "123456",
+        "HOST": "61.139.65.141",
+        "PORT": "30170",
+    },
 }
 
 

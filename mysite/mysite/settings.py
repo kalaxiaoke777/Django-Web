@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+GDAL_LIBRARY_PATH = 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python39\\Lib\\site-packages\\osgeo\\gdal204.dll'
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'django.contrib.gis',
     # "login.apps.LoginConfig",
     "login",
     "fishing",
@@ -89,12 +90,12 @@ DATABASES = {
         "PORT": "5432",
     },
     "fish": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "fs_point",
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        "NAME": "postgres",
         "USER": "postgres",
         "PASSWORD": "123456",
-        "HOST": "61.139.65.141",
-        "PORT": "30170",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
     },
 }
 

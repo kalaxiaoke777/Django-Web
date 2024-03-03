@@ -1,21 +1,34 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.db import connections
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.gis.geos import GEOSGeometry
+from django.db import connection
 
-
+@csrf_exempt 
 def addPoint(request):
     """
-    1.添加点操作
+    1.添加点操作(post)
     2.存入数据库
     3.刷新geoserver服务
     """
-    with connections["fish"].cursor() as cursor:
-        cursor.execute("SELECT * FROM fishing_spots")
-        result = cursor.fetchall()
-        if result:
-            return HttpResponse(result[0])
-        else:
-            return HttpResponse("No data")
+    with connections['fish'].cursor() as cursor:
+        cursor.execute(
+                "SELECT * FROM fishing_user"
+            )
+        rows = cursor.fetchall()
+        for row in rows:
+            # 处理查询结果
+            print(row)
+    return JsonResponse(
+                    {
+                        "message": "查询成功",
+                        "code": 200,
+                        "success": True,
+                    }
+                )
+    # point = GEOSGeometry(f'POINT({} {})')
+    # with connections["fish"].cursor() as cursor:
 
 
 def updataPoint(request):
@@ -28,21 +41,25 @@ def deletePoint(request):
 
 def fieldName(request):
     """
-    用于渲染表单类
+    用于渲染表单类(get)
     读取数据库的元数据
     """
     try:
         with connections["fish"].cursor() as cursor:
             cursor.execute(
-                "SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'fishing_spots'"
+                "SELECT * FROM fishing_user"
             )
             # 获取查询结果的列信息
             columns = [desc[0] for desc in cursor.description]
             field_list = []
             # 打印列名和数据类型
             for row in cursor.fetchall():
-                column_name, data_type = row
-                field_list.append({"field": column_name, "type": data_type})
+                field_list.append({
+                    "id":row[columns.index("user_id")],
+                    "name": row[columns.index("english")], 
+                    "field": row[columns.index("chinese")], 
+                    "type": row[columns.index("type")]
+                    })
             if len(field_list) > 0:
                 return JsonResponse(
                     {

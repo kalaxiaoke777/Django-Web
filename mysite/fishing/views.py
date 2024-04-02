@@ -51,6 +51,7 @@ def addPoint(request):
     else:
         return HttpResponseNotAllowed(["POST"])
     with connections["fish"].cursor() as cursor:
+
         cursor.execute(
             "INSERT INTO fishing_spots (geom, spot_name, openning_time, end_time, spot_area, locations, spot_type, address, user_review, r_rating, overview, facilities, fish_active) VALUES (ST_GeomFromText(%s, 4490), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
             [
@@ -90,6 +91,13 @@ def deletePoint(request):
     删除逻辑
     """
     try:
+        json_data = request.GET.get("fid")
+        with connections["fish"].cursor() as cursor:
+            # 根据提供的 ID 删除数据
+            delete_query = f"DELETE FROM fishing_spots WHERE id = {json_data};"
+            cursor.execute(delete_query)
+            connections["fish"].commit()
+            print("Data deleted successfully!")
         return JsonResponse(
             {
                 "message": "查询成功",

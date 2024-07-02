@@ -8,9 +8,10 @@
             "name": "Python 调试程序: Django",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}\\mysite\\manage.py",
+            "program": "${workspaceFolder}\\fishing\\manage.py",
             "args": [
-                "runserver"
+                "runserver",
+                "14425"
             ],
             "django": true
         },

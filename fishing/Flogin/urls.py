@@ -6,7 +6,7 @@ urlpatterns = [
     # path("login", views.UserRegisterAPIView.login(), name="login"),
     path(
         "register",
-        views.UserRegisterAPIView.as_view({"get": "register"}),
+        views.UserRegisterAPIView.as_view({"post": "register"}),
         name="register",
     ),
     path(

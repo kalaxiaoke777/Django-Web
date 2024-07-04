@@ -27,19 +27,28 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = "Flogin.CustomUser"
 
 # Application definition
 
 INSTALLED_APPS = [
     "Flogin.apps.FloginConfig",
-    "rest_framework",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
+    "rest_framework.authtoken",
+    "rest_framework_jwt",  # 添加此行
 ]
+
+# REST_FRAMEWORK = {
+#     "DEFAULT_AUTHENTICATION_CLASSES": (
+#         "rest_framework_jwt.authentication.JSONWebTokenAuthentication",
+#     ),
+# }
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -52,6 +61,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "fishing.urls"
+
 
 TEMPLATES = [
     {
@@ -68,6 +78,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = "fishing.wsgi.application"
 

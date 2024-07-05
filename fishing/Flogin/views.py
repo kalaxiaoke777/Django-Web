@@ -26,16 +26,19 @@ class UserRegisterAPIView(viewsets.ViewSet):
                 telephone_number=serializer.validated_data.get("telephone_number", ""),
                 chooes=serializer.validated_data.get("chooes", ""),
             )
+            # 注册成功应该初始化一张根据user_id关联的用户表、个人收藏表（也应当由增删改查）
+            # 这个个人收藏表应该也是空间库
+            # 收藏后从正式空间库复制过来
             return JsonResponse(
-                {
-                    "message": "注册失败,用户名重复",
-                    "code": 400,
-                    "success": False,
-                    "data": [],
-                }
+                {"message": "注册成功", "code": 200, "success": True, "data": []}
             )
         return JsonResponse(
-            {"message": "注册成功", "code": 200, "success": True, "data": []}
+            {
+                "message": "注册失败,用户名重复",
+                "code": 400,
+                "success": False,
+                "data": [],
+            }
         )
 
     def login(self, request):

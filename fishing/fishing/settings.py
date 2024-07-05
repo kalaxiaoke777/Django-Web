@@ -33,6 +33,7 @@ AUTH_USER_MODEL = "Flogin.CustomUser"
 
 INSTALLED_APPS = [
     "Flogin.apps.FloginConfig",
+    "django.contrib.gis",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -43,12 +44,6 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "rest_framework_jwt",  # 添加此行
 ]
-
-# REST_FRAMEWORK = {
-#     "DEFAULT_AUTHENTICATION_CLASSES": (
-#         "rest_framework_jwt.authentication.JSONWebTokenAuthentication",
-#     ),
-# }
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -61,7 +56,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "fishing.urls"
-
 
 TEMPLATES = [
     {

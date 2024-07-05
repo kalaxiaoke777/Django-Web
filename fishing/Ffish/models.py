@@ -1,3 +1,6 @@
-from django.db import models
+from django.contrib.gis.db import models as PGmodels
 
-# Create your models here.
+
+class Fish(PGmodels.Model):
+    class Meta:
+        verbose_name_plural = "fishes"

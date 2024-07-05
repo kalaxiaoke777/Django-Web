@@ -1,7 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
 
+from django.contrib.gis.db import models as PGmodels
+from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager
+from django.contrib.postgres.fields import ArrayField
 
 
 class CustomUserManager(BaseUserManager):
@@ -12,7 +14,7 @@ class CustomUserManager(BaseUserManager):
         password=None,
         telephone_number="",
         chooes="",
-        **extra_fields
+        **extra_fields,
     ):
         if not email:
             raise ValueError("The Email field must be set")
@@ -22,7 +24,7 @@ class CustomUserManager(BaseUserManager):
             email=email,
             telephone_number=telephone_number,
             chooes=chooes,
-            **extra_fields
+            **extra_fields,
         )
         user.set_password(password)
         user.save(using=self._db)
@@ -41,6 +43,10 @@ class CustomUser(AbstractBaseUser):
     telephone_number = models.CharField(max_length=30, blank=True)
     user_id = models.AutoField(primary_key=True)
     chooes = models.CharField(max_length=30)
+
+    # 这里的收藏列表直接和空间库id相关联，查询只需根据favorite字段查询即可
+    favorite = ArrayField(models.IntegerField(), default=[])
+
     objects = CustomUserManager()
     # Required fields for custom user model
     is_active = models.BooleanField(default=True)
